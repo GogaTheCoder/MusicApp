@@ -4,4 +4,5 @@
     <string name="api_tracks">API Tracks</string>
     <string name="download_tracks_screen">Download Tracks Screen</string>
     <string name="api_tracks_screen">API Tracks Screen</string>
+    <string name="player_screen">Player Screen</string>
 </resources>
