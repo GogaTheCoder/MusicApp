@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("androidx.navigation.safeargs.kotlin")
+    id("kotlin-kapt")
 }
 
 android {
@@ -42,7 +44,13 @@ android {
 
 dependencies {
 
+    // Стандартные зависимости
     implementation(libs.androidx.core.ktx)
+    implementation (libs.androidx.appcompat)
+    implementation (libs.material)
+    implementation (libs.androidx.constraintlayout)
+    implementation (libs.androidx.lifecycle.livedata.ktx)
+    implementation (libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
@@ -60,6 +68,30 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
+    // Navigation Component
     implementation (libs.androidx.navigation.fragment.ktx)
     implementation (libs.androidx.navigation.ui.ktx)
+
+    // Retrofit и OkHttp для работы с сетью
+    implementation (libs.retrofit)
+    implementation (libs.converter.gson)
+    implementation (libs.okhttp)
+    implementation (libs.logging.interceptor)
+
+    // Coroutines для асинхронных операций
+    implementation (libs.kotlinx.coroutines.core)
+    implementation (libs.kotlinx.coroutines.android)
+
+    // ExoPlayer для воспроизведения музыки
+    implementation (libs.exoplayer)
+
+    // Room для локальных данных (опционально)
+    implementation (libs.androidx.room.runtime)
+    implementation (libs.androidx.room.ktx)
+    kapt (libs.androidx.room.compiler)
+
+    // Тестирование
+    testImplementation (libs.junit)
+    androidTestImplementation (libs.androidx.junit.v115)
+    androidTestImplementation (libs.androidx.espresso.core.v351)
 }

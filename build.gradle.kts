@@ -4,3 +4,15 @@ plugins {
     alias(libs.plugins.kotlin.android) apply false
     alias(libs.plugins.kotlin.compose) apply false
 }
+
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath (libs.gradle) // Версия Gradle Plugin
+        classpath (libs.kotlin.gradle.plugin)
+        classpath (libs.androidx.navigation.safe.args.gradle.plugin) // Для Navigation Component
+    }
+}
