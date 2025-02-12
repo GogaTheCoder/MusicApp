@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/localTracksFragment">
+
+    <fragment
+        android:id="@+id/localTracksFragment"
+        android:name="com.example.musicapp.presentation.downloadtracks.DownloadTracksFragment"
+        android:label="Download Tracks" />
+
+    <fragment
+        android:id="@+id/apiTracksFragment"
+        android:name="com.example.musicapp.presentation.apitracks.ApiTracksFragment"
+        android:label="API Tracks" />
+</navigation>
