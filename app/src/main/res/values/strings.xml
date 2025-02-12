@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MusicApp</string>
+    <string name="download_tracks">Download Tracks</string>
+    <string name="api_tracks">API Tracks</string>
 </resources>

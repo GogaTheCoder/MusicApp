@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/localTracksFragment"
+        android:icon="@drawable/ic_download_tracks"
+        android:title="@string/download_tracks" />
+    <item
+        android:id="@+id/apiTracksFragment"
+        android:icon="@drawable/ic_api_tracks"
+        android:title="@string/api_tracks" />
+</menu>
