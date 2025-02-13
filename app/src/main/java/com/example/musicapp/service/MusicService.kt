@@ -17,7 +17,7 @@ import androidx.media3.session.MediaSessionService
 
 class MusicService : MediaSessionService() {
     private var mediaSession: MediaSession? = null
-    private lateinit var exoPlayer: ExoPlayer
+    lateinit var exoPlayer: ExoPlayer
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate() {
