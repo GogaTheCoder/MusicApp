@@ -6,7 +6,7 @@ import com.example.musicapp.domain.model.Track
 import com.example.musicapp.domain.repository.TracksRepository
 import kotlinx.coroutines.launch
 
-class LocalTracksViewModel(
+class DownloadTracksViewModel(
     private val repository: TracksRepository
 ) : ViewModel() {
 
