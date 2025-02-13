@@ -8,6 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.musicapp.databinding.FragmentDownloadTracksBinding
 import com.example.musicapp.presentation.base.BaseFragment
+import com.example.musicapp.presentation.downloadtracks.adapter.DownloadTracksAdapter
 
 class LocalTracksFragment : BaseFragment<FragmentDownloadTracksBinding>() {
 
@@ -21,7 +22,7 @@ class LocalTracksFragment : BaseFragment<FragmentDownloadTracksBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = DownloadTracksAdapter { track ->
+        adapter = DownloadTracksAdapter(emptyList()) { track ->
             // Обработка клика по треку
         }
         binding.recyclerView.adapter = adapter

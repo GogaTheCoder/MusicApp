@@ -7,10 +7,10 @@ import com.example.musicapp.databinding.ItemDownloadTrackBinding
 import com.example.musicapp.domain.model.Track
 import com.bumptech.glide.Glide
 
-class LocalTracksAdapter(
+class DownloadTracksAdapter(
     private var tracks: List<Track>,
     private val onItemClick: (Track) -> Unit
-) : RecyclerView.Adapter<LocalTracksAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<DownloadTracksAdapter.ViewHolder>() {
 
     // ViewHolder для элемента списка
     inner class ViewHolder(private val binding: ItemDownloadTrackBinding) : RecyclerView.ViewHolder(binding.root) {

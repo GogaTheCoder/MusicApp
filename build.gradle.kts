@@ -11,8 +11,8 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath (libs.gradle) // Версия Gradle Plugin
+        classpath (libs.androidx.gradle.plugin) // Версия Gradle Plugin
         classpath (libs.kotlin.gradle.plugin)
-        classpath (libs.androidx.navigation.safe.args.gradle.plugin) // Для Navigation Component
+        classpath (libs.navigation.safe.args) // Для Navigation Component
     }
 }
