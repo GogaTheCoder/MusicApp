@@ -53,6 +53,9 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.fragment.ktx)
     implementation(libs.androidx.viewbinding)
+    implementation(libs.androidx.media3.common.ktx)
+    implementation(libs.androidx.media3.exoplayer)
+    implementation(libs.androidx.media3.session)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -67,4 +70,6 @@ dependencies {
     implementation(libs.glide)
     kapt(libs.compiler)
 
+    implementation(libs.androidx.media)
+    implementation(libs.exoplayer)
 }
