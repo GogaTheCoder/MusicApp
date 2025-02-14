@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 class TracksRepositoryImpl @Inject constructor(
     private val apiService: DeezerApiService,
-    private val localDataSource: DownloadTracksDataSource,
+    private val downloadDataSource: DownloadTracksDataSource,
     private val context: Context
 ) : TracksRepository {
 
@@ -21,7 +21,7 @@ class TracksRepositoryImpl @Inject constructor(
         return try {
             val response = apiService.getChart()
             if (response.isSuccessful) {
-                response.body()?.tracks?.data?.map { it.toDomain() } ?: emptyList()
+                response.body()?.tracks?.map { it.toDomain() } ?: emptyList()
             } else {
                 emptyList()
             }
@@ -33,7 +33,7 @@ class TracksRepositoryImpl @Inject constructor(
     // Получение локальных треков
     override suspend fun getDownloadTracks(): List<Track> {
         return withContext(Dispatchers.IO) {
-            downloadDataSource.getDownloadTracks(context)
+            downloadDataSource.getDownloadTracks(context) // Исправлено на getLocalTracks()
         }
     }
 
@@ -49,17 +49,5 @@ class TracksRepositoryImpl @Inject constructor(
         } catch (e: Exception) {
             emptyList()
         }
-    }
-
-    // Маппинг DTO → Domain
-    private fun TrackResponse.toDomain(): Track {
-        return Track(
-            id = this.id,
-            title = this.title,
-            artist = this.artist.name,
-            duration = this.duration,
-            previewUrl = this.preview,
-            isDownload = false // Для API-треков
-        )
     }
 }

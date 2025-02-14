@@ -75,27 +75,6 @@ class PlayerFragment : BaseFragment<FragmentPlayerBinding>() {
         })
     }
 
-//    private fun setupPlayer() {
-//        // Установка начального состояния кнопки Play/Pause
-//        if (exoPlayer.isPlaying) {
-//            binding.btnPlayPause.setImageResource(R.drawable.ic_pause)
-//        } else {
-//            binding.btnPlayPause.setImageResource(R.drawable.ic_play)
-//        }
-//
-//        // Обновление SeekBar и времени
-//        exoPlayer.addListener(object : Player.Listener {
-//            override fun onEvents(player: Player, events: Player.Events) {
-//                requireActivity().runOnUiThread {
-//                    binding.seekBar.max = player.duration.toInt()
-//                    binding.seekBar.progress = player.currentPosition.toInt()
-//                    binding.tvCurrentTime.text = formatTime(player.currentPosition)
-//                    binding.tvDuration.text = formatTime(player.duration)
-//                }
-//            }
-//        })
-//    }
-
     private fun setupPlayer() {
         playerListener = object : Player.Listener {
             override fun onEvents(player: Player, events: Player.Events) {

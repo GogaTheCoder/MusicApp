@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/nav_graph"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav_graph"
     app:startDestination="@id/downloadTracksFragment">
 
+    <!-- Экран локальных треков -->
     <fragment
         android:id="@+id/downloadTracksFragment"
         android:name="com.example.musicapp.presentation.download_tracks.DownloadTracksFragment"
-        android:label="Download Tracks">
+        android:label="Local Tracks"
+        tools:layout="@layout/fragment_download_tracks">
+
+        <!-- Переход к плееру -->
         <action
             android:id="@+id/action_downloadTracksFragment_to_playerFragment"
             app:destination="@id/playerFragment">
@@ -17,13 +23,24 @@
         </action>
     </fragment>
 
+    <!-- Экран треков из API -->
     <fragment
         android:id="@+id/apiTracksFragment"
         android:name="com.example.musicapp.presentation.api_tracks.ApiTracksFragment"
-        android:label="API Tracks" />
+        android:label="API Tracks"
+        tools:layout="@layout/fragment_api_tracks">
 
+        <!-- Переход к плееру -->
+        <action
+            android:id="@+id/action_apiTracksFragment_to_playerFragment"
+            app:destination="@id/playerFragment" />
+    </fragment>
+
+    <!-- Экран плеера -->
     <fragment
         android:id="@+id/playerFragment"
         android:name="com.example.musicapp.presentation.player.PlayerFragment"
-        android:label="Player" />
+        android:label="Player"
+        tools:layout="@layout/fragment_player" />
+
 </navigation>

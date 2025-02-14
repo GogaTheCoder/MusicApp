@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.musicapp.databinding.ItemDownloadTrackBinding
 import com.example.musicapp.domain.model.Track
 import com.bumptech.glide.Glide
+import com.example.musicapp.R
 
 class DownloadTracksAdapter(
     private var tracks: List<Track>,
@@ -25,6 +26,9 @@ class DownloadTracksAdapter(
                 Glide.with(binding.root.context)
                     .load(coverUrl)
                     .into(binding.cover)
+            } ?: run {
+                // Установите обложку-заглушку, если обложка отсутствует
+                binding.cover.setImageResource(R.drawable.ic_placeholder) // Замените на вашу заглушку
             }
 
             // Обработка клика по элементу списка

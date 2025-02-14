@@ -8,4 +8,5 @@
         android:id="@+id/apiTracksFragment"
         android:icon="@drawable/ic_api_tracks"
         android:title="@string/api_tracks" />
+
 </menu>

@@ -1,67 +1,28 @@
-//package com.example.musicapp.presentation.downloadtracks
-//
-//import android.os.Bundle
-//import android.view.View
-//import android.widget.SearchView
-//import androidx.fragment.app.Fragment
-//import androidx.fragment.app.viewModels
-//import androidx.recyclerview.widget.LinearLayoutManager
-//import com.example.musicapp.databinding.FragmentDownloadTracksBinding
-//import com.example.musicapp.presentation.base.BaseFragment
-//import com.example.musicapp.presentation.downloadtracks.adapter.DownloadTracksAdapter
-//import androidx.fragment.app.viewModels
-//import androidx.lifecycle.LiveData
-//import androidx.lifecycle.Observer
-//
-//class LocalTracksFragment : BaseFragment<FragmentDownloadTracksBinding>() {
-//
-//    private val viewModel: DownloadTracksViewModel by viewModels()
-//    private lateinit var adapter: DownloadTracksAdapter
-//
-//    override fun createBinding(): FragmentDownloadTracksBinding {
-//        return FragmentDownloadTracksBinding.inflate(layoutInflater)
-//    }
-//
-//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        super.onViewCreated(view, savedInstanceState)
-//
-//        adapter = DownloadTracksAdapter(emptyList()) { track ->
-//            // Обработка клика по треку
-//        }
-//        binding.recyclerView.adapter = adapter
-//        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
-//
-//        viewModel.tracks.observe(viewLifecycleOwner) { tracks ->
-//            adapter.updateList(tracks)
-//        }
-//
-//        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-//            override fun onQueryTextSubmit(query: String?): Boolean = false
-//
-//            override fun onQueryTextChange(newText: String?): Boolean {
-//                newText?.let { viewModel.searchTracks(it) }
-//                return true
-//            }
-//        })
-//    }
-//}
-
 package com.example.musicapp.presentation.download_tracks
 
 import android.os.Bundle
 import android.view.View
 import android.widget.SearchView
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.musicapp.databinding.FragmentDownloadTracksBinding
 import com.example.musicapp.presentation.base.BaseFragment
 import com.example.musicapp.presentation.download_tracks.adapter.DownloadTracksAdapter
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import androidx.core.widget.doAfterTextChanged
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
-class LocalTracksFragment : BaseFragment<FragmentDownloadTracksBinding>() {
+class DownloadTracksFragment : BaseFragment<FragmentDownloadTracksBinding>() {
 
     private val viewModel: DownloadTracksViewModel by viewModels()
     private lateinit var adapter: DownloadTracksAdapter
+    private var searchJob: Job? = null
 
     override fun createBinding(): FragmentDownloadTracksBinding {
         return FragmentDownloadTracksBinding.inflate(layoutInflater)
@@ -70,33 +31,42 @@ class LocalTracksFragment : BaseFragment<FragmentDownloadTracksBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Инициализация адаптера
-        adapter = DownloadTracksAdapter(emptyList()) { track ->
-            // Обработка клика по треку
-        }
+        setupRecyclerView()
+        setupSearch()
+        observeViewModel()
+    }
 
-        // Настройка RecyclerView
+    private fun setupRecyclerView() {
+        adapter = DownloadTracksAdapter() { track ->
+            // Переход к экрану воспроизведения
+            val action = DownloadTracksFragmentDirections.actionLocalTracksFragmentToPlayerFragment(track)
+            findNavController().navigate(action)
+        }
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+    }
 
-        // Наблюдение за данными из ViewModel
-        viewModel.tracks.observe(viewLifecycleOwner, Observer { tracks ->
-            if (tracks != null) {
-                adapter.updateList(tracks)
+    private fun setupSearch() {
+        binding.searchView.editText.doAfterTextChanged { editable ->
+            searchJob?.cancel()
+            searchJob = MainScope().launch {
+                delay(500) // Задержка 500 мс
+                editable?.toString()?.let { query ->
+                    viewModel.searchTracks(query)
+                }
             }
-        })
+        }
+    }
 
-        // Настройка поиска
-        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean = false
+    private fun observeViewModel() {
+        viewModel.tracks.observe(viewLifecycleOwner) { tracks ->
+            adapter.submitList(tracks)
+            binding.progressBar.visibility = View.GONE
+        }
 
-            override fun onQueryTextChange(newText: String?): Boolean {
-                newText?.let { viewModel.searchTracks(it) }
-                return true
-            }
-        })
-
-        // Загрузка треков
-        viewModel.downloadTracks()
+        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        }
     }
 }
+

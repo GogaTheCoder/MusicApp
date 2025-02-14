@@ -8,7 +8,8 @@ import com.example.musicapp.domain.model.Track
 
 class DownloadTracksDataSource(private val context: Context) {
 
-    fun getLocalTracks(): List<Track> {
+
+    fun getDownloadTracks(context: Context): List<Track> {
         val tracks = mutableListOf<Track>()
         val collection = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
         val projection = arrayOf(
@@ -20,7 +21,7 @@ class DownloadTracksDataSource(private val context: Context) {
         val selection = "${MediaStore.Audio.Media.IS_MUSIC} != 0"
         val sortOrder = "${MediaStore.Audio.Media.TITLE} ASC"
 
-        context.contentResolver.query(
+        this.context.contentResolver.query(
             collection,
             projection,
             selection,
