@@ -6,11 +6,11 @@
 
     <fragment
         android:id="@+id/localTracksFragment"
-        android:name="com.example.musicapp.presentation.downloadtracks.DownloadTracksFragment"
+        android:name="com.example.musicapp.presentation.download_tracks.DownloadTracksFragment"
         android:label="Download Tracks" />
 
     <fragment
         android:id="@+id/apiTracksFragment"
-        android:name="com.example.musicapp.presentation.apitracks.ApiTracksFragment"
+        android:name="com.example.musicapp.presentation.api_tracks.ApiTracksFragment"
         android:label="API Tracks" />
 </navigation>

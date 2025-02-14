@@ -1,4 +1,4 @@
-package com.example.musicapp.presentation.downloadtracks.adapter
+package com.example.musicapp.presentation.download_tracks.adapter
 
 import  android.view.LayoutInflater
 import android.view.ViewGroup

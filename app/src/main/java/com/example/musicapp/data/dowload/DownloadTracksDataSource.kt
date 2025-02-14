@@ -1,11 +1,12 @@
 package com.example.musicapp.data.dowload
 
+import android.content.ContentUris
 import android.content.Context
 import android.net.Uri
 import android.provider.MediaStore
 import com.example.musicapp.domain.model.Track
 
-class LocalTracksDataSource(private val context: Context) {
+class DownloadTracksDataSource(private val context: Context) {
 
     fun getLocalTracks(): List<Track> {
         val tracks = mutableListOf<Track>()

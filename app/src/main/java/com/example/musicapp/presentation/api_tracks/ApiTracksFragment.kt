@@ -1,4 +1,4 @@
-package com.example.musicapp.presentation.apitracks
+package com.example.musicapp.presentation.api_tracks
 
 import com.example.musicapp.databinding.FragmentApiTracksBinding
 import com.example.musicapp.presentation.base.BaseFragment

@@ -26,7 +26,7 @@ class PlayerFragment : BaseFragment<FragmentPlayerBinding>() {
 
     private val connection = object : ServiceConnection {
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
-            musicService = (service as MusicService.LocalBinder).getService()
+            musicService = (service as MusicService.DownloadBinder).getService()
             exoPlayer = musicService!!.exoPlayer
             setupPlayer()
         }

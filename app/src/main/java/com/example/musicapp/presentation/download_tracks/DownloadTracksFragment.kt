@@ -46,18 +46,17 @@
 //    }
 //}
 
-package com.example.musicapp.presentation.downloadtracks
+package com.example.musicapp.presentation.download_tracks
 
 import android.os.Bundle
 import android.view.View
 import android.widget.SearchView
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.musicapp.databinding.FragmentDownloadTracksBinding
 import com.example.musicapp.presentation.base.BaseFragment
-import com.example.musicapp.presentation.downloadtracks.adapter.DownloadTracksAdapter
+import com.example.musicapp.presentation.download_tracks.adapter.DownloadTracksAdapter
 
 class LocalTracksFragment : BaseFragment<FragmentDownloadTracksBinding>() {
 

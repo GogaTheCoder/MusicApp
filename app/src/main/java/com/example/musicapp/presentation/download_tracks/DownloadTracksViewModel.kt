@@ -1,6 +1,5 @@
-package com.example.musicapp.presentation.downloadtracks
+package com.example.musicapp.presentation.download_tracks
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.musicapp.domain.model.Track
