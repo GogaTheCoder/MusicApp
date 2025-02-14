@@ -1,15 +1,18 @@
 package com.example.musicapp.presentation.downloadtracks
 
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
 import android.widget.SearchView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.musicapp.Manifest
 import com.example.musicapp.databinding.FragmentDownloadTracksBinding
 import com.example.musicapp.presentation.base.BaseFragment
 
-class LocalTracksFragment : BaseFragment<FragmentDownloadTracksBinding>() {
+class DownloadTracksFragment : BaseFragment<FragmentDownloadTracksBinding>() {
 
     private val viewModel: DownloadTracksViewModel by viewModels()
     private lateinit var adapter: DownloadTracksAdapter
@@ -39,5 +42,20 @@ class LocalTracksFragment : BaseFragment<FragmentDownloadTracksBinding>() {
                 return true
             }
         })
+
+        private fun checkPermissions() {
+            if (ContextCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                requestPermissions(
+                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                    REQUEST_CODE_PERMISSION
+                )
+            } else {
+                loadDownloadTracks()
+            }
+        }
     }
 }
