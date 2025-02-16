@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     id("kotlin-kapt")
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -88,4 +89,6 @@ dependencies {
 
     implementation ("com.squareup.moshi:moshi-kotlin:1.14.0")
     implementation (libs.converter.moshi)
+
+    implementation ("androidx.appcompat:appcompat:1.7.0")
 }

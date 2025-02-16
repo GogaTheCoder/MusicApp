@@ -2,55 +2,60 @@ package com.example.musicapp.presentation.download_tracks
 
 import android.os.Bundle
 import android.view.View
-import android.widget.SearchView
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.musicapp.databinding.FragmentDownloadTracksBinding
-import com.example.musicapp.presentation.base.BaseFragment
+import com.example.musicapp.domain.model.Track
 import com.example.musicapp.presentation.download_tracks.adapter.DownloadTracksAdapter
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import androidx.core.widget.doAfterTextChanged
+import com.google.android.material.search.SearchView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import com.example.musicapp.R
 
-class DownloadTracksFragment : BaseFragment<FragmentDownloadTracksBinding>() {
 
+@AndroidEntryPoint
+class DownloadTracksFragment : Fragment(R.layout.fragment_download_tracks) {
+
+    private var _binding: FragmentDownloadTracksBinding? = null
+    private val binding get() = _binding!!
     private val viewModel: DownloadTracksViewModel by viewModels()
     private lateinit var adapter: DownloadTracksAdapter
     private var searchJob: Job? = null
 
-    override fun createBinding(): FragmentDownloadTracksBinding {
-        return FragmentDownloadTracksBinding.inflate(layoutInflater)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        _binding = FragmentDownloadTracksBinding.bind(view)
 
         setupRecyclerView()
         setupSearch()
         observeViewModel()
+        viewModel.downloadTracks()
     }
 
     private fun setupRecyclerView() {
-        adapter = DownloadTracksAdapter() { track ->
-            // Переход к экрану воспроизведения
-            val action = DownloadTracksFragmentDirections.actionLocalTracksFragmentToPlayerFragment(track)
+        adapter = DownloadTracksAdapter(emptyList()) { track ->
+            val action = DownloadTracksFragmentDirections
+                .actionDownloadTracksFragmentToPlayerFragment(track)
             findNavController().navigate(action)
         }
-        binding.recyclerView.adapter = adapter
-        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        binding.recyclerView.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = this@DownloadTracksFragment.adapter
+        }
     }
 
     private fun setupSearch() {
         binding.searchView.editText.doAfterTextChanged { editable ->
             searchJob?.cancel()
             searchJob = MainScope().launch {
-                delay(500) // Задержка 500 мс
+                delay(500)
                 editable?.toString()?.let { query ->
                     viewModel.searchTracks(query)
                 }
@@ -60,13 +65,17 @@ class DownloadTracksFragment : BaseFragment<FragmentDownloadTracksBinding>() {
 
     private fun observeViewModel() {
         viewModel.tracks.observe(viewLifecycleOwner) { tracks ->
-            adapter.submitList(tracks)
             binding.progressBar.visibility = View.GONE
+            adapter.submitList(tracks)
         }
 
         viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
             binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
         }
     }
-}
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+}

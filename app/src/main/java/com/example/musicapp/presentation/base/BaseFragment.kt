@@ -9,7 +9,6 @@ import androidx.viewbinding.ViewBinding
 
 abstract class BaseFragment<VB : ViewBinding> : Fragment() {
 
-    abstract var DownloadTracksFragmentDirections: Any
     private var _binding: VB? = null
     protected val binding: VB
         get() = _binding ?: throw IllegalStateException("Binding is null")

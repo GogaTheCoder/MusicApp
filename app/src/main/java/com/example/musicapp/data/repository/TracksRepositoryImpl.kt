@@ -26,14 +26,14 @@ class TracksRepositoryImpl @Inject constructor(
                 emptyList()
             }
         } catch (e: Exception) {
-            emptyList() // В реальном проекте обработайте ошибку
+            emptyList()
         }
     }
 
     // Получение локальных треков
     override suspend fun getDownloadTracks(): List<Track> {
         return withContext(Dispatchers.IO) {
-            downloadDataSource.getDownloadTracks(context) // Исправлено на getLocalTracks()
+            downloadDataSource.getDownloadTracks(context)
         }
     }
 
